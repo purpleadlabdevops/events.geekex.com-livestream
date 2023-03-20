@@ -1,0 +1,22 @@
+{
+  "name": "events-geekex-checkout",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.13.6",
+    "axios": "^0.24.0",
+    "core-js": "^3.15.1",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.0.3",
+    "nuxt": "^2.15.7"
+  },
+  "devDependencies": {
+    "sass": "^1.37.5",
+    "sass-loader": "^10.2.0"
+  }
+}
