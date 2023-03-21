@@ -4,18 +4,21 @@
       <tr class="product">
         <td>
           <h4>{{ data.productName }}</h4>
-          <p v-if="data.baseProductName === 'livestream'">
-            Live Stream <br>
-            Slides <br>
-            1 Month Membership to Geekhub
-          </p>
-          <p v-else>
-            Live Stream <br>
-            Replays <br>
-            Notes From Event <br>
-            Slides <br>
-            3 Month Membership to Geekhub
-          </p>
+          <div class="product__desc">
+            <img :src="data.imageUrl" :alt="data.productName">
+            <p v-if="data.baseProductName === 'livestream'">
+              - Live Stream <br>
+              - Slides <br>
+              - 1 Month Membership to Geekhub
+            </p>
+            <p v-else>
+              - Live Stream <br>
+              - Replays <br>
+              - Notes From Event <br>
+              - Slides <br>
+              - 3 Month Membership to Geekhub
+            </p>
+          </div>
         </td>
         <td>${{ data.price }}</td>
       </tr>
@@ -87,14 +90,27 @@ export default{
   }
   h4{
     font-size: 18px;
-    border-bottom: .5px solid #73583e;
-    padding-bottom: 5px;
-    margin-bottom: 5px;
-    margin-right: 10px;
+    margin-bottom: 15px;
+    margin-right: 15px;
   }
   p{
-    font-size: 14px;
+    font-weight: 300;
     padding-bottom: 10px;
+    line-height: 1.4;
+    font-size: 14px;
+  }
+  &__desc{
+    display: flex;
+    justify-content: flex-start;
+    padding-right: 15px;
+    align-items: flex-start;
+    padding-bottom: 15px;
+    img{
+      display: block;
+      width: 80px;
+      height: auto;
+      margin-right: 15px;
+    }
   }
 }
 </style>

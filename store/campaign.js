@@ -34,6 +34,7 @@ export const mutations = {
 
 export const actions = {
   requestCrypto({commit, state, dispatch, getters}, id){
+    this.commit('global/setLoader', true)
     let price = null
     this.$axios.post(`${api}/konnektive/crypto?endpoint=/campaign/query`, {
       headers: {
@@ -58,6 +59,9 @@ export const actions = {
       .catch(err => {
         console.log('err');
         console.dir(err)
+      })
+      .finally(() => {
+        this.commit('global/setLoader', false)
       })
   }
 

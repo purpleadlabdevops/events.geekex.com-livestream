@@ -44,7 +44,7 @@ export const actions = {
             country: this.state.global.countries[billingData.country].iso,
             postalCode: '90210',
             state: 'test',
-            sessionId: lander.data.message.sessionId
+            sessionId: lander.data.message.sessionId,
           }
           if(localStorage.affid)        data.affid   = localStorage.affid
           if(localStorage.utm_source)   data.custom1 = localStorage.utm_source
