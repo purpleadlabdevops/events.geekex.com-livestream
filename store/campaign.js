@@ -46,12 +46,13 @@ export const actions = {
         const result = JSON.parse(decrypt(response.data))
         const campaign = result.message.data[id]
         commit('setCampaign', campaign)
-        return campaign.products
+        return dispatch('dynamicPrice', {id, pid: this.state.campaign.pid})
       })
-      .then(products =>{
+      .then(schedulePrice =>{
+        const products = getters.getCampaign.products
         products.forEach(product => {
           if(product.campaignProductId == this.state.campaign.pid){
-            this.commit('global/setPrice', product.price)
+            this.commit('global/setPrice', schedulePrice || product.price)
             commit('setProduct', product)
           }
         })
@@ -63,6 +64,32 @@ export const actions = {
       .finally(() => {
         this.commit('global/setLoader', false)
       })
+  },
+  dynamicPrice(state, {id, pid}){
+
+    return fetch('/sp&dl.json').then(res=>res.json()).then(data=>{
+
+      const pricesSchedule = data[id]?.[pid]
+      if(!pricesSchedule) return false
+
+      const getTimeFormat = (pare)=>{
+        const dateInArray = pare[1].split('.')
+        const normalizedDate = `${dateInArray[1]}.${dateInArray[0]}.${dateInArray[2]}`
+
+        return new Date(`${normalizedDate} ${pare[0]}`).getTime()
+      }
+
+      const today = Date.now()
+      for(let key in pricesSchedule) {
+        const start = getTimeFormat(pricesSchedule[key].start.split(', '))
+        const end = getTimeFormat(pricesSchedule[key].end.split(', '))
+        if (today >= start && today <= end) {
+          return key
+          break
+        }
+      }
+      return false
+    })
   }
 
 }

@@ -6,21 +6,24 @@
           <h4>{{ data.productName }}</h4>
           <div class="product__desc">
             <img :src="data.imageUrl" :alt="data.productName">
-            <p v-if="data.baseProductName === 'livestream'">
-              - Live Stream <br>
-              - Slides <br>
-              - 1 Month Membership to Geekhub
-            </p>
-            <p v-else>
-              - Live Stream <br>
-              - Replays <br>
-              - Notes From Event <br>
-              - Slides <br>
-              - 3 Month Membership to Geekhub
-            </p>
+
+            <template v-if="campaignId !== '19'">
+              <p v-if="data.baseProductName === 'livestream'">
+                - Live Stream <br>
+                - Slides <br>
+                - 1 Month Membership to Geekhub
+              </p>
+              <p v-else>
+                - Live Stream <br>
+                - Replays <br>
+                - Notes From Event <br>
+                - Slides <br>
+                - 3 Month Membership to Geekhub
+              </p>
+            </template>
           </div>
         </td>
-        <td>${{ data.price }}</td>
+        <td>${{ price }}</td>
       </tr>
       <tr v-if="discount !== 0">
         <td>Discount:</td>
@@ -40,6 +43,7 @@
 export default{
   props: ['data'],
   computed: {
+    campaignId(){ return this.$store.getters['campaign/getCampaignId'] },
     discount(){ return this.$store.getters['global/getDiscount'] },
     price(){ return this.$store.getters['global/getPrice'] },
   },
