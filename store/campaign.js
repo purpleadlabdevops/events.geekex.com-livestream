@@ -49,6 +49,7 @@ export const actions = {
         return dispatch('dynamicPrice', {id, pid: this.state.campaign.pid})
       })
       .then(schedulePrice =>{
+        console.log(schedulePrice)
         const products = getters.getCampaign.products
         products.forEach(product => {
           if(product.campaignProductId == this.state.campaign.pid){
@@ -74,13 +75,12 @@ export const actions = {
 
       const getTimeFormat = (pare)=>{
         const dateInArray = pare[1].split('.')
-        return new Date(+dateInArray[2],+dateInArray[1] - 1, +dateInArray[0]).getTime()
-
+        const timeInArray = pare[0].split(':')
+        return new Date(+dateInArray[2],+dateInArray[1] - 1, +dateInArray[0], timeInArray[0], timeInArray[1], timeInArray[2]).getTime()
       }
 
       const today = Date.now()
       for(let key in pricesSchedule) {
-
         const start = getTimeFormat(pricesSchedule[key].start.split(', '))
         const end = getTimeFormat(pricesSchedule[key].end.split(', '))
         if (today >= start && today <= end) {

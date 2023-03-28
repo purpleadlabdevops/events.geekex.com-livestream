@@ -27,13 +27,15 @@ export const actions = {
         console.log('EF.conversion '+localStorage.total);
         console.dir(res)
       })
-    this.$axios.post(`${process.env.API}/konnektive?endpoint=/order/confirm`, {
-      headers: {'Content-Type': 'application/json'},
-      params: {orderId: orderId}
-    })
+    if(orderId) {
+      this.$axios.post(`${process.env.API}/konnektive?endpoint=/order/confirm`, {
+        headers: {'Content-Type': 'application/json'},
+        params: {orderId: orderId}
+      })
       .then(() => {
         window.location.href = 'https://geekex.com';
       })
+    }
   },
   showError({commit}, msg){
     commit('setError', msg)
@@ -72,7 +74,12 @@ export const actions = {
             headers: {'Content-Type': 'application/json'},
             params: {orderId: localStorage.orderId}
           })
-          dispatch('addSubscriber')
+            if(this.state.campaign.product.descriptor !== "livestream_nothing_else") {
+              dispatch('addSubscriber')
+            } else {
+              dispatch('actionThankyou')
+              this.commit('global/setLoader', false)
+            }
         } else if(response.data.result === "ERROR"){
           throw response.data.message
         } else {
