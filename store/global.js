@@ -964,7 +964,7 @@ export const state = () => ({
         },
         {
           "name": "New Zealand",
-          "code": "+24",
+          "code": "+64",
           "iso": "NZ",
           "flag": "https://cdn.kcak11.com/CountryFlags/countries/nz.svg",
           "mask": "(###)###-####"
