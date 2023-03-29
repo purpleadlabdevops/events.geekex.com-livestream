@@ -33,8 +33,10 @@ export const actions = {
         params: {orderId: orderId}
       })
       .then(() => {
-        window.location.href = 'https://geekex.com';
+        setTimeout(()=> window.location.href = 'https://geekex.com', 3000);
       })
+    } else {
+      setTimeout(()=> window.location.href = 'https://geekex.com', 3000);
     }
   },
   showError({commit}, msg){
@@ -78,7 +80,6 @@ export const actions = {
               dispatch('addSubscriber')
             } else {
               dispatch('actionThankyou')
-              this.commit('global/setLoader', false)
             }
         } else if(response.data.result === "ERROR"){
           throw response.data.message
@@ -91,8 +92,12 @@ export const actions = {
         console.log('err');
         dispatch('showError', err)
       })
+      .finally(() => {
+        this.commit('global/setLoader', false)
+      })
   },
   addSubscriber({commit, state, dispatch}){
+    this.commit('global/setLoader', true)
     const sub = {
       campaignId: 10,
       product1_qty: 1,
